@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <AnalysisMode>All</AnalysisMode>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference
+            Include="SonarAnalyzer.CSharp"
+            Version="9.16.0.82469"
+            PrivateAssets="all"
+            Condition="$(MSBuildProjectExtension) == '.csproj'"/>
+    </ItemGroup>
+
+</Project>
