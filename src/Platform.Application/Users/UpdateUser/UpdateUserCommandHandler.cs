@@ -1,6 +1,7 @@
 ﻿using Platform.Application.Common;
 using Platform.Domain.Common;
 using Platform.Domain.Users;
+using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Application.Users.UpdateUser;
 

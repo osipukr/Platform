@@ -2,6 +2,7 @@
 using Platform.Infrastructure.Data.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Infrastructure.Data.Configurations;
 

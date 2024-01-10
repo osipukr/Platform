@@ -1,6 +1,6 @@
 ﻿using Platform.Domain.Common;
 
-namespace Platform.Domain.Users;
+namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class Email : ValueObject
 {
@@ -14,6 +14,11 @@ public sealed class Email : ValueObject
     public static Result<Email> Create(string value)
     {
         return Result.Success(new Email(value));
+    }
+
+    public override string ToString()
+    {
+        return Value;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

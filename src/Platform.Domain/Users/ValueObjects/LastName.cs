@@ -1,10 +1,10 @@
 ﻿using Platform.Domain.Common;
 
-namespace Platform.Domain.Users;
+namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class LastName : ValueObject
 {
-    private const int MaxLength = 100;
+    public const int MaxLength = 100;
 
     private LastName(string value)
     {
@@ -28,6 +28,11 @@ public sealed class LastName : ValueObject
         }
 
         return Result.Success(new LastName(processedValue));
+    }
+
+    public override string ToString()
+    {
+        return Value;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()

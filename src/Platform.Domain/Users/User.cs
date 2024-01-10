@@ -1,5 +1,6 @@
 ﻿using Platform.Domain.Common;
 using Platform.Domain.Users.Events;
+using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Domain.Users;
 

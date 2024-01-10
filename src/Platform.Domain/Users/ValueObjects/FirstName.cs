@@ -1,10 +1,10 @@
 ﻿using Platform.Domain.Common;
 
-namespace Platform.Domain.Users;
+namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class FirstName : ValueObject
 {
-    private const int MaxLength = 100;
+    public const int MaxLength = 100;
 
     private FirstName(string value)
     {
@@ -13,7 +13,7 @@ public sealed class FirstName : ValueObject
 
     public string Value { get; }
 
-    public static Result<FirstName> Create(string value)
+    public static Result<FirstName> Create(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -28,6 +28,11 @@ public sealed class FirstName : ValueObject
         }
 
         return Result.Success(new FirstName(processedValue));
+    }
+
+    public override string ToString()
+    {
+        return Value;
     }
 
     protected override IEnumerable<object> GetEqualityComponents()
