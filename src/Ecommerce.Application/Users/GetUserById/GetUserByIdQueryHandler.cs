@@ -5,7 +5,7 @@ using Ecommerce.Domain.Users;
 
 namespace Ecommerce.Application.Users.GetUserById;
 
-public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Result<UserDto>>
+public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Result<UserDto>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Result<Us
             return Result.Failure<UserDto>(UserErrors.NotFound(request.UserId));
         }
 
-        var userDto = _mapper.Map<User, UserDto>(user);
+        var userDto = _mapper.Map<UserDto>(user);
 
         return Result.Success(userDto);
     }

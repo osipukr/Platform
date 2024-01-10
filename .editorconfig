@@ -232,7 +232,7 @@ dotnet_naming_style.begins_with_i.capitalization = pascal_case
 dotnet_diagnostic.IDE0161.severity = silent
 dotnet_diagnostic.IDE0160.severity = warning
 dotnet_diagnostic.S3216.severity = silent
-dotnet_diagnostic.IDE0008.severity = none
+dotnet_diagnostic.IDE0008.severity = silent
 dotnet_diagnostic.IDE0290.severity = none
 dotnet_diagnostic.CA1812.severity = silent
 

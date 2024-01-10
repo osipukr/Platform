@@ -39,7 +39,7 @@ internal sealed class DispatchDomainEventsInterceptor : SaveChangesInterceptor
         }
 
         var entities = context.ChangeTracker
-            .Entries<IEntity>()
+            .Entries<BaseEntity>()
             .Where(e => e.Entity.DomainEvents.Any())
             .Select(e => e.Entity)
             .ToArray();

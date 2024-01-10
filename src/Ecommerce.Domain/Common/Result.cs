@@ -2,23 +2,36 @@
 
 public record Result
 {
+    private readonly Error? _error;
+
     internal Result()
     {
         IsSuccess = true;
-        Error = default;
+        _error = default;
     }
 
     internal Result(Error error)
     {
         IsSuccess = false;
-        Error = error;
+        _error = error;
     }
 
     public bool IsSuccess { get; }
 
     public bool IsFailure => !IsSuccess;
 
-    public Error? Error { get; }
+    public Error Error
+    {
+        get
+        {
+            if (IsSuccess)
+            {
+                throw new InvalidOperationException($"Unable obtain {nameof(Error)} property for successful result");
+            }
+
+            return _error!;
+        }
+    }
 
     public static Result Success() => new();
 
@@ -39,23 +52,35 @@ public record Result
 
 public record Result<T> : Result
 {
+    private readonly T? _value;
+
     internal Result(T value)
     {
-        Value = value;
+        _value = value;
     }
 
     internal Result(Error error) : base(error)
     {
-        Value = default;
     }
 
-    public T? Value { get; }
+    public T Value
+    {
+        get
+        {
+            if (IsFailure)
+            {
+                throw new InvalidOperationException($"Unable obtain {nameof(Value)} property for failed result");
+            }
+
+            return _value!;
+        }
+    }
 
     public TResult Match<TResult>(Func<T, TResult> onSuccess, Func<Error, TResult> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
 
-        return IsSuccess ? onSuccess(Value!) : onFailure(Error!);
+        return IsSuccess ? onSuccess(Value) : onFailure(Error!);
     }
 }

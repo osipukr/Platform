@@ -1,6 +1,6 @@
 ﻿namespace Ecommerce.Domain.Common;
 
-public abstract class BaseEntity : IEntity
+public abstract class BaseEntity
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 

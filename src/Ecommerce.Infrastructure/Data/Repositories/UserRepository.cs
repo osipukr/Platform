@@ -14,8 +14,13 @@ internal sealed class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
-    public Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return _dbContext.Users.FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
+        return await _dbContext.Users.ToListAsync(cancellationToken);
+    }
+
+    public async Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
 }
