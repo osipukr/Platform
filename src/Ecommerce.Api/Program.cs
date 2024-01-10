@@ -1,6 +1,12 @@
+using Ecommerce.Api.Extensions;
+using Ecommerce.Application;
+using Ecommerce.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,6 +25,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
 
-app.MapGet("/api", () => "");
+app.MapEndpoints();
 
 app.Run();
