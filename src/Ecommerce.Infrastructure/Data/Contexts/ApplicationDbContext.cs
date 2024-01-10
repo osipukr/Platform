@@ -1,6 +1,7 @@
 ﻿using Ecommerce.Application.Common;
 using Ecommerce.Domain.Users;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Ecommerce.Infrastructure.Data.Contexts;
 
@@ -14,7 +15,7 @@ internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext, I
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(modelBuilder);
     }

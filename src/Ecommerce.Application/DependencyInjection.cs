@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Ecommerce.Application;
 
@@ -9,11 +10,11 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var referenceAssembly = typeof(DependencyInjection).Assembly;
+        var referenceAssembly = Assembly.GetExecutingAssembly();
 
-        services.AddMediatR(options =>
+        services.AddMediatR(cfg =>
         {
-            options.RegisterServicesFromAssembly(referenceAssembly);
+            cfg.RegisterServicesFromAssembly(referenceAssembly);
         });
 
         services.AddAutoMapper(referenceAssembly);

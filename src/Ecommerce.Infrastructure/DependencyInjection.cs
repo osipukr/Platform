@@ -31,7 +31,10 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString(DatabaseConnectionStringName);
 
-        ArgumentException.ThrowIfNullOrWhiteSpace(connectionString);
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new InvalidOperationException($"Connection string '{DatabaseConnectionStringName}' was not found");
+        }
 
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 

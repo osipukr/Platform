@@ -2,6 +2,7 @@
 <Project>
 
     <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
@@ -15,9 +16,8 @@
     <ItemGroup>
         <PackageReference
             Include="SonarAnalyzer.CSharp"
-            Version="9.16.0.82469"
             PrivateAssets="all"
-            Condition="$(MSBuildProjectExtension) == '.csproj'"/>
+            Condition="$(MSBuildProjectExtension) == '.csproj'" />
     </ItemGroup>
 
 </Project>

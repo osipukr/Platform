@@ -235,6 +235,7 @@ dotnet_diagnostic.S3216.severity = silent
 dotnet_diagnostic.IDE0008.severity = silent
 dotnet_diagnostic.IDE0290.severity = none
 dotnet_diagnostic.CA1812.severity = silent
+dotnet_diagnostic.S4035.severity = suggestion
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
@@ -266,3 +267,5 @@ dotnet_style_allow_multiple_blank_lines_experimental = true:silent
 insert_final_newline = true
 dotnet_diagnostic.CA2007.severity = silent
 dotnet_diagnostic.CA1040.severity = silent
+dotnet_diagnostic.CA1716.severity = suggestion
+dotnet_diagnostic.CA1724.severity = none
