@@ -3,12 +3,13 @@ using Platform.Application.Users.GetUsers;
 using Platform.Application.Users.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Platform.Api.Infrastructure;
 
 namespace Platform.Api.Endpoints;
 
-public static class UserEndpoints
+public sealed class UserEndpoints : IEndpoint
 {
-    public static void MapUserEndpoints(this IEndpointRouteBuilder builder)
+    public void MapRoutes(IEndpointRouteBuilder builder)
     {
         var routeGroup = builder.MapGroup("/api/users");
 
@@ -35,14 +36,12 @@ public static class UserEndpoints
                 [FromBody] UpdateUserRequest request,
                 ISender sender,
                 CancellationToken cancellationToken) =>
-        {
-            var command = new UpdateUserCommand(id, request.FirstName, request.LastName);
+            {
+                var command = new UpdateUserCommand(id, request.FirstName, request.LastName);
 
-            var result = await sender.Send(command, cancellationToken);
+                var result = await sender.Send(command, cancellationToken);
 
-            return result.Match(() => Results.Ok(), Results.BadRequest);
-        });
+                return result.Match(() => Results.Ok(), Results.BadRequest);
+            });
     }
 }
-
-public record UpdateUserRequest(string FirstName, string LastName);
