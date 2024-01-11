@@ -1,7 +1,6 @@
 ﻿using Platform.Domain.Users;
 using Platform.Infrastructure.Data.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Infrastructure.Data.Configurations;
 
@@ -13,24 +12,22 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasKey(user => user.Id);
 
-        builder
-            .Property(x => x.FirstName)
-            .HasConversion(firstName => firstName.Value, value => FirstName.Create(value).Value)
-            .IsRequired();
+        builder.Property(user => user.Id).ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.LastName)
-            .HasConversion(lastName => lastName.Value, value => LastName.Create(value).Value)
-            .IsRequired();
+            .OwnsOne(user => user.FirstName)
+            .Property(firstName => firstName.Value)
+            .HasColumnName(nameof(User.FirstName));
 
         builder
-            .HasIndex(user => user.Email)
-            .IsUnique();
+            .OwnsOne(user => user.LastName)
+            .Property(lastName => lastName.Value)
+            .HasColumnName(nameof(User.LastName));
 
         builder
-            .Property(x => x.Email)
-            .HasConversion(email => email.Value, value => Email.Create(value).Value)
-            .IsRequired();
+            .OwnsOne(user => user.Email)
+            .Property(email => email.Value)
+            .HasColumnName(nameof(User.Email));
 
         builder
             .Property(user => user.PasswordHash)

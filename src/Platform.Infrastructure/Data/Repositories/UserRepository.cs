@@ -22,4 +22,9 @@ internal sealed class UserRepository : IUserRepository
     {
         return await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
+
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Users.FirstOrDefaultAsync(user => user.Email.Value == email, cancellationToken);
+    }
 }

@@ -7,6 +7,8 @@ using Platform.Infrastructure.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Platform.Application.Authentication;
+using Platform.Infrastructure.Authentication;
 
 namespace Platform.Infrastructure;
 
@@ -20,6 +22,7 @@ public static class DependencyInjection
     {
         services.AddDataServices(configuration);
         services.AddSecurityServices();
+        services.AddAuthenticationServices();
 
         return services;
     }
@@ -52,5 +55,10 @@ public static class DependencyInjection
     private static void AddSecurityServices(this IServiceCollection services)
     {
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
+    }
+
+    private static void AddAuthenticationServices(this IServiceCollection services)
+    {
+        services.AddTransient<ITokenProvider, JwtTokenProvider>();
     }
 }

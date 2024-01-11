@@ -5,6 +5,10 @@ namespace Platform.Domain.Users;
 
 public sealed class User : BaseEntity
 {
+    private User()
+    {
+    }
+
     public User(FirstName firstName, LastName lastName, Email email, string passwordHash)
         : this(default, firstName, lastName, email, passwordHash)
     {

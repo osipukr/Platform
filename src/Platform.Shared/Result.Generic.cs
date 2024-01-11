@@ -2,16 +2,16 @@
 
 namespace Platform.Shared;
 
-public sealed record Result<T> : ResultBase
+public record Result<T> : ResultBase
 {
     private readonly T? _value;
 
-    internal Result(T value) : base(true, null)
+    protected Result(T value) : base(true, null)
     {
         _value = value;
     }
 
-    internal Result(Error error) : base(false, error)
+    protected Result(Error error) : base(false, error)
     {
         _value = default;
     }
@@ -33,4 +33,8 @@ public sealed record Result<T> : ResultBase
     {
         return IsSuccess ? onSuccess(Value) : onFailure(Error);
     }
+
+    public static Result<T> Success(T value) => new(value);
+
+    public static Result<T> Failure(Error error) => new(error);
 }
