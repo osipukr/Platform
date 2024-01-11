@@ -5,13 +5,11 @@ namespace Platform.Infrastructure.Security;
 
 internal sealed class PasswordHasher : IPasswordHasher
 {
-    private const int Cost = 17;
-
     public string HashPassword(string password)
     {
         ArgumentNullException.ThrowIfNull(password);
 
-        return BC.HashPassword(password, Cost);
+        return BC.HashPassword(password);
     }
 
     public bool VerifyHashedPassword(string hashedPassword, string providedPassword)
