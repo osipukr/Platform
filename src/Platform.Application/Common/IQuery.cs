@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Platform.Application.Common;
+﻿namespace Platform.Application.Common;
 
 public interface IQuery : IRequest;
 

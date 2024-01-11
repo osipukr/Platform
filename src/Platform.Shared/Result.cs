@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Platform.Domain.Common;
+namespace Platform.Shared;
 
 public sealed record Result : ResultBase
 {

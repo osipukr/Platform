@@ -1,7 +1,4 @@
-﻿using FluentAssertions.Execution;
-using Platform.Domain.Common;
-
-namespace Platform.Domain.Tests.Common;
+﻿namespace Platform.Shared.Tests;
 
 public class ErrorTests
 {

@@ -1,5 +1,4 @@
-﻿using Platform.Domain.Common;
-using Platform.Domain.Users.Events;
+﻿using Platform.Domain.Users.Events;
 using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Domain.Users;
@@ -7,7 +6,13 @@ namespace Platform.Domain.Users;
 public sealed class User : BaseEntity
 {
     public User(FirstName firstName, LastName lastName, Email email, string passwordHash)
+        : this(default, firstName, lastName, email, passwordHash)
     {
+    }
+
+    public User(int id, FirstName firstName, LastName lastName, Email email, string passwordHash)
+    {
+        Id = id;
         FirstName = firstName;
         LastName = lastName;
         Email = email;

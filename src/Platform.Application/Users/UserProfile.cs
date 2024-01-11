@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Platform.Application.Common.Extensions;
-using Platform.Domain.Users;
+﻿using Platform.Domain.Users;
 
 namespace Platform.Application.Users;
 

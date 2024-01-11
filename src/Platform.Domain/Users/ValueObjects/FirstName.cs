@@ -1,6 +1,4 @@
-﻿using Platform.Domain.Common;
-
-namespace Platform.Domain.Users.ValueObjects;
+﻿namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class FirstName : ValueObject
 {

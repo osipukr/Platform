@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Platform.Application.Common;
-using Platform.Domain.Common;
-using Platform.Domain.Users;
+﻿using Platform.Domain.Users;
 
 namespace Platform.Application.Users.GetUserById;
 

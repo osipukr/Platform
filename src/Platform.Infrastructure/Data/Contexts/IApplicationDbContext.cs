@@ -1,5 +1,4 @@
 ﻿using Platform.Domain.Users;
-using Microsoft.EntityFrameworkCore;
 
 namespace Platform.Infrastructure.Data.Contexts;
 

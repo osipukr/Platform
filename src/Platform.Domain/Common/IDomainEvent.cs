@@ -1,5 +1,3 @@
-﻿using MediatR;
-
-namespace Platform.Domain.Common;
+﻿namespace Platform.Domain.Common;
 
 public interface IDomainEvent : INotification;

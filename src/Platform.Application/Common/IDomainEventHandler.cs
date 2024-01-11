@@ -1,5 +1,4 @@
 ﻿using Platform.Domain.Common;
-using MediatR;
 
 namespace Platform.Application.Common;
 

@@ -1,6 +1,4 @@
-﻿using Platform.Domain.Common;
-
-namespace Platform.Domain.Users.ValueObjects;
+﻿namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class Email : ValueObject
 {
@@ -11,9 +9,16 @@ public sealed class Email : ValueObject
 
     public string Value { get; }
 
-    public static Result<Email> Create(string value)
+    public static Result<Email> Create(string? value)
     {
-        return Result.Success(new Email(value));
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return Result.Failure<Email>(UserErrors.EmailEmpty);
+        }
+
+        var processedValue = value.Trim();
+
+        return Result.Success(new Email(processedValue));
     }
 
     public override string ToString()

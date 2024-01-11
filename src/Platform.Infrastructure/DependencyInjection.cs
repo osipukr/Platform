@@ -1,12 +1,9 @@
-﻿using Platform.Application.Common;
-using Platform.Application.Security;
+﻿using Platform.Application.Security;
 using Platform.Application.Users;
 using Platform.Infrastructure.Data.Contexts;
 using Platform.Infrastructure.Data.Interceptors;
 using Platform.Infrastructure.Data.Repositories;
 using Platform.Infrastructure.Security;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

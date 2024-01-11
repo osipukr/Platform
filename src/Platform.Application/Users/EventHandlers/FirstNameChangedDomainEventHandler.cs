@@ -1,6 +1,4 @@
-﻿using Platform.Application.Common;
-using Platform.Domain.Users.Events;
-using Microsoft.Extensions.Logging;
+﻿using Platform.Domain.Users.Events;
 
 namespace Platform.Application.Users.EventHandlers;
 

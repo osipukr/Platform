@@ -1,25 +1,20 @@
-﻿using FluentAssertions.Execution;
-using Platform.Domain.Common;
+﻿namespace Platform.Shared.Tests;
 
-namespace Platform.Domain.Tests.Common;
-
-public class ResultGenericTests
+public class ResultTests
 {
     [Fact]
     public void Success_Should_ReturnSuccessResult()
     {
-        // Arrange
-        const string expectedValue = "test";
-
         // Act
-        var result = Result.Success(expectedValue);
+        var result = Result.Success();
 
         // Assert
+        result.Should().NotBeNull();
+
         using (new AssertionScope())
         {
             result.IsSuccess.Should().BeTrue();
             result.IsFailure.Should().BeFalse();
-            result.Value.Should().Be(expectedValue);
 
             FluentActions
                 .Invoking(() => result.Error)
@@ -34,20 +29,16 @@ public class ResultGenericTests
     {
         // Act
         var error = Error.NotFound(string.Empty, string.Empty);
-        var result = Result.Failure<string>(error);
+        var result = Result.Failure(error);
 
         // Assert
+        result.Should().NotBeNull();
+
         using (new AssertionScope())
         {
             result.IsSuccess.Should().BeFalse();
             result.IsFailure.Should().BeTrue();
             result.Error.Should().Be(error);
-
-            FluentActions
-                .Invoking(() => result.Value)
-                .Should()
-                .Throw<InvalidOperationException>()
-                .Where(e => !string.IsNullOrWhiteSpace(e.Message));
         }
     }
 
@@ -58,10 +49,10 @@ public class ResultGenericTests
         const string successResult = "success";
         const string failureResult = "failure";
 
-        var result = Result.Success(string.Empty);
+        var result = Result.Success();
 
         // Act
-        var actualResult = result.Match(_ => successResult, _ => failureResult);
+        var actualResult = result.Match(() => successResult, _ => failureResult);
 
         // Assert
         actualResult.Should().Be(successResult);
@@ -75,10 +66,10 @@ public class ResultGenericTests
         const string failureResult = "failure";
 
         var error = Error.NotFound(string.Empty, string.Empty);
-        var result = Result.Failure<string>(error);
+        var result = Result.Failure(error);
 
         // Act
-        var actualResult = result.Match(_ => successResult, _ => failureResult);
+        var actualResult = result.Match(() => successResult, _ => failureResult);
 
         // Assert
         actualResult.Should().Be(failureResult);

@@ -1,6 +1,4 @@
-﻿using Platform.Application.Common;
-using Platform.Domain.Users;
-using Microsoft.EntityFrameworkCore;
+﻿using Platform.Domain.Users;
 using System.Reflection;
 
 namespace Platform.Infrastructure.Data.Contexts;

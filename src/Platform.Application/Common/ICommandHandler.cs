@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Platform.Application.Common;
+﻿namespace Platform.Application.Common;
 
 public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand>
     where TCommand : ICommand;

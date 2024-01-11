@@ -1,4 +1,4 @@
-﻿namespace Platform.Domain.Common;
+﻿namespace Platform.Shared;
 
 public enum ErrorType
 {

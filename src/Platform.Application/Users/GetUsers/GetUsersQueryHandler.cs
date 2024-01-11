@@ -1,8 +1,4 @@
-﻿using AutoMapper;
-using Platform.Application.Common;
-using Platform.Domain.Common;
-
-namespace Platform.Application.Users.GetUsers;
+﻿namespace Platform.Application.Users.GetUsers;
 
 public sealed class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, Result<IEnumerable<UserDto>>>
 {

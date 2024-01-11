@@ -1,6 +1,4 @@
-﻿using Platform.Domain.Common;
-
-namespace Platform.Domain.Users;
+﻿namespace Platform.Domain.Users;
 
 public static class UserErrors
 {
@@ -23,4 +21,8 @@ public static class UserErrors
     public static Error LastNameTooLong(int maxLength) => Error.Validation(
         "LastName.TooLong",
         $"Last name cannot be longer than {maxLength} chars");
+
+    public static readonly Error EmailEmpty = Error.Validation(
+        "Email.Empty",
+        "Email cannot be empty");
 }

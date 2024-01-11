@@ -1,7 +1,6 @@
 ﻿using Platform.Application.Users;
 using Platform.Domain.Users;
 using Platform.Infrastructure.Data.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 namespace Platform.Infrastructure.Data.Repositories;
 
