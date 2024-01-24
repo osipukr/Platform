@@ -31,11 +31,11 @@ public sealed class User : BaseEntity
 
     public string PasswordHash { get; }
 
-    public bool ChangeFirstName(FirstName firstName)
+    public void ChangeFirstName(FirstName firstName)
     {
         if (FirstName.Equals(firstName))
         {
-            return false;
+            return;
         }
 
         var previousValue = FirstName.Value;
@@ -43,15 +43,13 @@ public sealed class User : BaseEntity
         FirstName = firstName;
 
         AddDomainEvent(new FirstNameChangedDomainEvent(Id, previousValue, FirstName.Value));
-
-        return true;
     }
 
-    public bool ChangeLastName(LastName lastName)
+    public void ChangeLastName(LastName lastName)
     {
         if (LastName.Equals(lastName))
         {
-            return false;
+            return;
         }
 
         var previousValue = LastName.Value;
@@ -59,15 +57,13 @@ public sealed class User : BaseEntity
         LastName = lastName;
 
         AddDomainEvent(new LastNameChangedDomainEvent(Id, previousValue, LastName.Value));
-
-        return true;
     }
 
-    public bool ChangeEmail(Email email)
+    public void ChangeEmail(Email email)
     {
         if (Email.Equals(email))
         {
-            return false;
+            return;
         }
 
         var previousValue = Email.Value;
@@ -75,7 +71,5 @@ public sealed class User : BaseEntity
         Email = email;
 
         AddDomainEvent(new EmailChangedDomainEvent(Id, previousValue, Email.Value));
-
-        return true;
     }
 }

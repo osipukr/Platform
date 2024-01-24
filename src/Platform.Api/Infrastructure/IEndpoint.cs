@@ -1,6 +1,6 @@
 ﻿namespace Platform.Api.Infrastructure;
 
-public interface IEndpoint
+internal interface IEndpoint
 {
     void MapRoutes(IEndpointRouteBuilder builder);
 }

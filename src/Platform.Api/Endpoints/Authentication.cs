@@ -5,7 +5,7 @@ using Platform.Application.Authentication;
 
 namespace Platform.Api.Endpoints;
 
-public sealed class AuthenticationEndpoints : IEndpoint
+internal sealed class Authentication : IEndpoint
 {
     public void MapRoutes(IEndpointRouteBuilder builder)
     {
@@ -18,7 +18,7 @@ public sealed class AuthenticationEndpoints : IEndpoint
 
             var result = await sender.Send(command, cancellationToken);
 
-            return result.Match(Results.Ok, Results.BadRequest);
+            return Results.Ok(result);
         });
     }
 }

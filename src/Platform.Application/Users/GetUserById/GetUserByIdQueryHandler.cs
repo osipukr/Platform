@@ -1,8 +1,8 @@
-﻿using Platform.Domain.Users;
+﻿using Platform.Domain.Users.Exceptions;
 
 namespace Platform.Application.Users.GetUserById;
 
-public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Result<UserDto>>
+public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, UserResponse>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -13,19 +13,17 @@ public sealed class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, Re
         _mapper = mapper;
     }
 
-    public async Task<Result<UserDto>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<UserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
-
         var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (user is null)
         {
-            return Result.Failure<UserDto>(UserErrors.NotFound(request.UserId));
+            throw new UserNotFoundException(request.UserId);
         }
 
-        var userDto = _mapper.Map<UserDto>(user);
+        var userResponse = _mapper.Map<UserResponse>(user);
 
-        return Result.Success(userDto);
+        return userResponse;
     }
 }

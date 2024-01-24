@@ -2,9 +2,9 @@
 
 namespace Platform.Api.Extensions;
 
-public static class EndpointExtensions
+internal static class EndpointExtensions
 {
-    public static IServiceCollection AddEndpoints(this IServiceCollection services)
+    internal static IServiceCollection AddEndpoints(this IServiceCollection services)
     {
         services.Scan(scan =>
             scan.FromAssemblyOf<IEndpoint>()
@@ -15,7 +15,7 @@ public static class EndpointExtensions
         return services;
     }
 
-    public static void MapEndpoints(this IEndpointRouteBuilder builder)
+    internal static void MapEndpoints(this IEndpointRouteBuilder builder)
     {
         var endpoints = builder.ServiceProvider.GetServices<IEndpoint>().ToArray();
 

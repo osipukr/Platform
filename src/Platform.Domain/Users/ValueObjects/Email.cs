@@ -1,4 +1,6 @@
-﻿namespace Platform.Domain.Users.ValueObjects;
+﻿using Platform.Domain.Users.Exceptions;
+
+namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class Email : ValueObject
 {
@@ -9,16 +11,16 @@ public sealed class Email : ValueObject
 
     public string Value { get; }
 
-    public static Result<Email> Create(string? value)
+    public static Email Create(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return Result.Failure<Email>(UserErrors.EmailEmpty);
+            throw new EmailEmptyException();
         }
 
         var processedValue = value.Trim();
 
-        return Result.Success(new Email(processedValue));
+        return new Email(processedValue);
     }
 
     public override string ToString()

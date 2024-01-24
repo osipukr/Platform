@@ -1,6 +1,6 @@
 ﻿namespace Platform.Application.Users.GetUsers;
 
-public sealed class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, Result<IEnumerable<UserDto>>>
+public sealed class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, IEnumerable<UserResponse>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
@@ -11,12 +11,12 @@ public sealed class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, Result<I
         _mapper = mapper;
     }
 
-    public async Task<Result<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<UserResponse>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
         var users = await _userRepository.GetAllAsync(cancellationToken);
 
-        var usersDto = _mapper.Map<IEnumerable<UserDto>>(users);
+        var usersResponse = _mapper.Map<IEnumerable<UserResponse>>(users);
 
-        return Result.Success(usersDto);
+        return usersResponse;
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Platform.Application.Security;
 using Platform.Application.Users;
-using Platform.Domain.Users;
+using Platform.Domain.Authentication.Exceptions;
 
 namespace Platform.Application.Authentication;
 
-public sealed class AuthenticationCommandHandler : ICommandHandler<AuthenticationCommand, Result<AuthenticationResponse>>
+public sealed class AuthenticationCommandHandler : ICommandHandler<AuthenticationCommand, AuthenticationResponse>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
@@ -20,26 +20,26 @@ public sealed class AuthenticationCommandHandler : ICommandHandler<Authenticatio
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<Result<AuthenticationResponse>> Handle(AuthenticationCommand request, CancellationToken cancellationToken)
+    public async Task<AuthenticationResponse> Handle(AuthenticationCommand request, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
-
-        User? user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+        var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
 
         if (user is null)
         {
-            return Result.Failure<AuthenticationResponse>(Error.Validation("Authentication.WrongEmail", ""));
+            throw new AuthenticationFailedException();
         }
 
-        bool isVerified = _passwordHasher.VerifyHashedPassword(user.PasswordHash, request.Password);
+        var isVerified = _passwordHasher.VerifyHashedPassword(user.PasswordHash, request.Password);
 
         if (!isVerified)
         {
-            return Result.Failure<AuthenticationResponse>(Error.Validation("Authentication.WrongPassword", ""));
+            throw new AuthenticationFailedException();
         }
 
-        string token = await _tokenProvider.GenerateTokenAsync(user);
+        var token = await _tokenProvider.GenerateTokenAsync(user);
 
-        return Result.Success(new AuthenticationResponse(token));
+        var response = new AuthenticationResponse(token);
+
+        return response;
     }
 }

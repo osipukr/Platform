@@ -1,4 +1,6 @@
-﻿namespace Platform.Domain.Users.ValueObjects;
+﻿using Platform.Domain.Users.Exceptions;
+
+namespace Platform.Domain.Users.ValueObjects;
 
 public sealed class LastName : ValueObject
 {
@@ -11,21 +13,21 @@ public sealed class LastName : ValueObject
 
     public string Value { get; }
 
-    public static Result<LastName> Create(string value)
+    public static LastName Create(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return Result.Failure<LastName>(UserErrors.LastNameEmpty);
+            throw new LastNameEmptyException();
         }
 
         var processedValue = value.Trim();
 
         if (processedValue.Length > MaxLength)
         {
-            return Result.Failure<LastName>(UserErrors.LastNameTooLong(MaxLength));
+            throw new LastNameTooLongException(MaxLength);
         }
 
-        return Result.Success(new LastName(processedValue));
+        return new LastName(processedValue);
     }
 
     public override string ToString()

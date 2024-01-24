@@ -1,3 +1,3 @@
 ﻿global using MediatR;
 global using Platform.Domain.Common;
-global using Platform.Shared;
+global using Platform.Domain.Common.Exceptions;

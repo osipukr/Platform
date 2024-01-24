@@ -1,4 +1,4 @@
-﻿using Platform.Domain.Users;
+﻿using Platform.Domain.Users.Exceptions;
 using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Domain.Tests.Users.ValueObjects;
@@ -9,38 +9,37 @@ public class FirstNameTests
 
     [Theory]
     [ClassData(typeof(EmptyTestData))]
-    public void Create_Should_ReturnError_WhenValueIsEmpty(string? value)
+    public void Create_Should_ThrowFirstNameEmptyException_WhenValueIsEmpty(string? value)
     {
-        // Act
-        var result = FirstName.Create(value);
-
-        // Assert
-        result.Error.Should().Be(UserErrors.FirstNameEmpty);
+        // Act & Assert
+        FluentActions
+            .Invoking(() => FirstName.Create(value))
+            .Should()
+            .Throw<FirstNameEmptyException>();
     }
 
     [Fact]
-    public void Create_Should_ReturnError_WhenValueIsTooLong()
+    public void Create_Should_ThrowTooLongFirstNameException_WhenValueIsTooLong()
     {
         // Arrange
-        var tooLongString = new string('a', MaxLength + 1);
+        var tooLongName = new string('a', MaxLength + 1);
 
-        // Act
-        var result = FirstName.Create(tooLongString);
-
-        // Assert
-        result.Error.Should().Be(UserErrors.FirstNameTooLong(MaxLength));
+        // Act & Assert
+        FluentActions
+            .Invoking(() => FirstName.Create(tooLongName))
+            .Should()
+            .Throw<FirstNameTooLongException>();
     }
 
     [Theory]
     [ClassData(typeof(ValidTestData))]
-    public void Create_Should_ReturnSuccess_WhenValueIsValid(string? value, string expectedValue)
+    public void Create_Should_ReturnFirstName_WhenValueIsValid(string? value, string expectedValue)
     {
         // Act
-        var result = FirstName.Create(value);
+        var firstName = FirstName.Create(value);
 
         // Assert
-        var firstName = result.Value;
-
+        firstName.Should().NotBeNull();
         firstName.Value.Should().Be(expectedValue);
     }
 
@@ -48,8 +47,8 @@ public class FirstNameTests
     public void Equals_Should_ReturnTrue_WhenValuesAreTheSame()
     {
         // Arrange
-        var first = FirstName.Create("test").Value;
-        var second = FirstName.Create("test").Value;
+        var first = FirstName.Create("test");
+        var second = FirstName.Create("test");
 
         // Act
         var result = first.Equals(second);
@@ -62,8 +61,8 @@ public class FirstNameTests
     public void Equals_Should_ReturnFalse_WhenValuesAreNotTheSame()
     {
         // Arrange
-        var first = FirstName.Create("test").Value;
-        var second = FirstName.Create("test-new").Value;
+        var first = FirstName.Create("test");
+        var second = FirstName.Create("test-new");
 
         // Act
         var result = first.Equals(second);
@@ -76,7 +75,7 @@ public class FirstNameTests
     public void ToString_Should_ReturnValue()
     {
         // Arrange
-        var firstName = FirstName.Create("test").Value;
+        var firstName = FirstName.Create("test");
 
         // Act
         var result = firstName.ToString();

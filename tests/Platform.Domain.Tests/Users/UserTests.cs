@@ -7,26 +7,25 @@ namespace Platform.Domain.Tests.Users;
 
 public class UserTests
 {
-    private const int UserId = 1;
+    private const int TestUserId = 1;
 
     [Fact]
     public void ChangeFirstName_Should_ReturnFalse_WhenNewNameIsTheSameAsOldOne()
     {
         // Arrange
-        var firstName = FirstName.Create("first-name").Value;
-        var lastName = LastName.Create("last-name").Value;
-        var email = Email.Create("email@email.com").Value;
+        var firstName = FirstName.Create("first-name");
+        var lastName = LastName.Create("last-name");
+        var email = Email.Create("email@email.com");
         var passwordHash = string.Empty;
-        var user = new User(UserId, firstName, lastName, email, passwordHash);
+        var user = new User(TestUserId, firstName, lastName, email, passwordHash);
 
         // Act
-        bool result = user.ChangeFirstName(firstName);
+        user.ChangeFirstName(firstName);
 
         // Assert
         using (new AssertionScope())
         {
-            result.Should().BeFalse();
-            user.Id.Should().Be(UserId);
+            user.Id.Should().Be(TestUserId);
             user.FirstName.Should().BeEquivalentTo(firstName);
             user.LastName.Should().BeEquivalentTo(lastName);
             user.Email.Should().BeEquivalentTo(email);
@@ -39,23 +38,21 @@ public class UserTests
     public void ChangeFirstName_Should_ReturnTrueAndAddDomainEvent_WhenNewNameIsNotTheSameAsOldOne()
     {
         // Arrange
-        var firstName = FirstName.Create("first-name").Value;
-        var newFirstName = FirstName.Create("new-first-name").Value;
-        var lastName = LastName.Create("last-name").Value;
-        var email = Email.Create("email@email.com").Value;
+        var firstName = FirstName.Create("first-name");
+        var newFirstName = FirstName.Create("new-first-name");
+        var lastName = LastName.Create("last-name");
+        var email = Email.Create("email@email.com");
         var passwordHash = string.Empty;
-        var user = new User(UserId, firstName, lastName, email, passwordHash);
-        var expectedDomainEvent = new FirstNameChangedDomainEvent(UserId, firstName.Value, newFirstName.Value);
+        var user = new User(TestUserId, firstName, lastName, email, passwordHash);
+        var expectedDomainEvent = new FirstNameChangedDomainEvent(TestUserId, firstName.Value, newFirstName.Value);
 
         // Act
-        bool result = user.ChangeFirstName(newFirstName);
+        user.ChangeFirstName(newFirstName);
 
         // Assert
         using (new AssertionScope())
         {
-            result.Should().BeTrue();
-
-            user.Id.Should().Be(UserId);
+            user.Id.Should().Be(TestUserId);
             user.FirstName.Should().BeEquivalentTo(newFirstName);
             user.LastName.Should().BeEquivalentTo(lastName);
             user.Email.Should().BeEquivalentTo(email);
@@ -69,20 +66,19 @@ public class UserTests
     public void ChangeLastName_Should_ReturnFalse_WhenNewNameIsTheSameAsOldOne()
     {
         // Arrange
-        var firstName = FirstName.Create("first-name").Value;
-        var lastName = LastName.Create("last-name").Value;
-        var email = Email.Create("email@email.com").Value;
+        var firstName = FirstName.Create("first-name");
+        var lastName = LastName.Create("last-name");
+        var email = Email.Create("email@email.com");
         var passwordHash = string.Empty;
-        var user = new User(UserId, firstName, lastName, email, passwordHash);
+        var user = new User(TestUserId, firstName, lastName, email, passwordHash);
 
         // Act
-        bool result = user.ChangeLastName(lastName);
+        user.ChangeLastName(lastName);
 
         // Assert
         using (new AssertionScope())
         {
-            result.Should().BeFalse();
-            user.Id.Should().Be(UserId);
+            user.Id.Should().Be(TestUserId);
             user.FirstName.Should().BeEquivalentTo(firstName);
             user.LastName.Should().BeEquivalentTo(lastName);
             user.Email.Should().BeEquivalentTo(email);
@@ -95,23 +91,21 @@ public class UserTests
     public void ChangeLastName_Should_ReturnTrueAndAddDomainEvent_WhenNewNameIsNotTheSameAsOldOne()
     {
         // Arrange
-        var firstName = FirstName.Create("first-name").Value;
-        var lastName = LastName.Create("last-name").Value;
-        var newLastName = LastName.Create("new-last-name").Value;
-        var email = Email.Create("email@email.com").Value;
+        var firstName = FirstName.Create("first-name");
+        var lastName = LastName.Create("last-name");
+        var newLastName = LastName.Create("new-last-name");
+        var email = Email.Create("email@email.com");
         var passwordHash = string.Empty;
-        var user = new User(UserId, firstName, lastName, email, passwordHash);
-        var expectedDomainEvent = new LastNameChangedDomainEvent(UserId, lastName.Value, newLastName.Value);
+        var user = new User(TestUserId, firstName, lastName, email, passwordHash);
+        var expectedDomainEvent = new LastNameChangedDomainEvent(TestUserId, lastName.Value, newLastName.Value);
 
         // Act
-        bool result = user.ChangeLastName(newLastName);
+        user.ChangeLastName(newLastName);
 
         // Assert
         using (new AssertionScope())
         {
-            result.Should().BeTrue();
-
-            user.Id.Should().Be(UserId);
+            user.Id.Should().Be(TestUserId);
             user.FirstName.Should().BeEquivalentTo(firstName);
             user.LastName.Should().BeEquivalentTo(newLastName);
             user.Email.Should().BeEquivalentTo(email);
@@ -125,20 +119,19 @@ public class UserTests
     public void ChangeEmail_Should_ReturnFalse_WhenNewEmailIsTheSameAsOldOne()
     {
         // Arrange
-        var firstName = FirstName.Create("first-name").Value;
-        var lastName = LastName.Create("last-name").Value;
-        var email = Email.Create("email@email.com").Value;
+        var firstName = FirstName.Create("first-name");
+        var lastName = LastName.Create("last-name");
+        var email = Email.Create("email@email.com");
         var passwordHash = string.Empty;
-        var user = new User(UserId, firstName, lastName, email, passwordHash);
+        var user = new User(TestUserId, firstName, lastName, email, passwordHash);
 
         // Act
-        bool result = user.ChangeEmail(email);
+        user.ChangeEmail(email);
 
         // Assert
         using (new AssertionScope())
         {
-            result.Should().BeFalse();
-            user.Id.Should().Be(UserId);
+            user.Id.Should().Be(TestUserId);
             user.FirstName.Should().BeEquivalentTo(firstName);
             user.LastName.Should().BeEquivalentTo(lastName);
             user.Email.Should().BeEquivalentTo(email);
@@ -151,23 +144,21 @@ public class UserTests
     public void ChangeEmail_Should_ReturnTrueAndAddDomainEvent_WhenNewEmailIsNotTheSameAsOldOne()
     {
         // Arrange
-        var firstName = FirstName.Create("first-name").Value;
-        var lastName = LastName.Create("last-name").Value;
-        var email = Email.Create("email@email.com").Value;
-        var newEmail = Email.Create("new-email@email.com").Value;
+        var firstName = FirstName.Create("first-name");
+        var lastName = LastName.Create("last-name");
+        var email = Email.Create("email@email.com");
+        var newEmail = Email.Create("new-email@email.com");
         var passwordHash = string.Empty;
-        var user = new User(UserId, firstName, lastName, email, passwordHash);
-        var expectedDomainEvent = new EmailChangedDomainEvent(UserId, email.Value, newEmail.Value);
+        var user = new User(TestUserId, firstName, lastName, email, passwordHash);
+        var expectedDomainEvent = new EmailChangedDomainEvent(TestUserId, email.Value, newEmail.Value);
 
         // Act
-        bool result = user.ChangeEmail(newEmail);
+        user.ChangeEmail(newEmail);
 
         // Assert
         using (new AssertionScope())
         {
-            result.Should().BeTrue();
-
-            user.Id.Should().Be(UserId);
+            user.Id.Should().Be(TestUserId);
             user.FirstName.Should().BeEquivalentTo(firstName);
             user.LastName.Should().BeEquivalentTo(lastName);
             user.Email.Should().BeEquivalentTo(newEmail);

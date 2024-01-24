@@ -1,9 +1,9 @@
-﻿using Platform.Domain.Users;
+﻿using Platform.Domain.Users.Exceptions;
 using Platform.Domain.Users.ValueObjects;
 
 namespace Platform.Application.Users.UpdateUser;
 
-public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, Result>
+public sealed class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -14,35 +14,21 @@ public class UpdateUserCommandHandler : ICommandHandler<UpdateUserCommand, Resul
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateUserCommand request, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
-
         var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
 
         if (user is null)
         {
-            return Result.Failure(UserErrors.NotFound(request.UserId));
+            throw new UserNotFoundException(request.UserId);
         }
 
         var firstName = FirstName.Create(request.FirstName);
         var lastName = LastName.Create(request.LastName);
 
-        if (firstName.IsFailure)
-        {
-            return Result.Failure(firstName.Error);
-        }
-
-        if (lastName.IsFailure)
-        {
-            return Result.Failure(lastName.Error);
-        }
-
-        user.ChangeFirstName(firstName.Value);
-        user.ChangeLastName(lastName.Value);
+        user.ChangeFirstName(firstName);
+        user.ChangeLastName(lastName);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Result.Success();
     }
 }

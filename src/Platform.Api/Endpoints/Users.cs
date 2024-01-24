@@ -7,7 +7,7 @@ using Platform.Api.Infrastructure;
 
 namespace Platform.Api.Endpoints;
 
-public sealed class UserEndpoints : IEndpoint
+internal sealed class Users : IEndpoint
 {
     public void MapRoutes(IEndpointRouteBuilder builder)
     {
@@ -19,7 +19,7 @@ public sealed class UserEndpoints : IEndpoint
 
             var result = await sender.Send(query, cancellationToken);
 
-            return result.Match(Results.Ok, Results.BadRequest);
+            return Results.Ok(result);
         });
 
         routeGroup.MapGet("/{id:int}", async (int id, ISender sender, CancellationToken cancellationToken) =>
@@ -28,7 +28,7 @@ public sealed class UserEndpoints : IEndpoint
 
             var result = await sender.Send(query, cancellationToken);
 
-            return result.Match(Results.Ok, Results.BadRequest);
+            return Results.Ok(result);
         });
 
         routeGroup.MapPut("/{id:int}",
@@ -39,9 +39,9 @@ public sealed class UserEndpoints : IEndpoint
             {
                 var command = new UpdateUserCommand(id, request.FirstName, request.LastName);
 
-                var result = await sender.Send(command, cancellationToken);
+                await sender.Send(command, cancellationToken);
 
-                return result.Match(() => Results.Ok(), Results.BadRequest);
+                return Results.Ok();
             });
     }
 }

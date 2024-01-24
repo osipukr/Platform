@@ -5,8 +5,8 @@ namespace Platform.Infrastructure.Authentication;
 
 internal sealed class JwtTokenProvider : ITokenProvider
 {
-    public async Task<string> GenerateTokenAsync(User user)
+    public Task<string> GenerateTokenAsync(User user)
     {
-        return "TestToken";
+        return Task.FromResult("TestToken");
     }
 }
